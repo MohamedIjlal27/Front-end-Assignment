@@ -2,7 +2,7 @@
   position: fixed;
   left: 0;
   top: 0;
-  width: 260px;
+  width: 287px;
   height: 100%;
   background-color: var(--secondary-color);
   padding: 20px 14px;
@@ -326,5 +326,29 @@
     &:hover {
       opacity: 0.8;
     }
+  }
+  .trial-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .sidebar-footer-text {
+    margin-right: 10px;
+  }
+
+  .sidebar-footer-button {
+    background-color: #5a32a3; /* Purple background */
+    color: #fff; /* White text */
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    text-transform: uppercase; /* Optional: to match button styles */
+  }
+
+  .sidebar-footer-button:hover {
+    background-color: #472587; /* Darker purple on hover */
   }
 }

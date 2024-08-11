@@ -4,16 +4,8 @@ import { LIGHT_THEME } from "../../constants/themeConstants";
 import LogoBlue from "../../assets/images/logo_blue.svg";
 import LogoWhite from "../../assets/images/logo_white.svg";
 import {
-  MdOutlineAttachMoney,
-  MdOutlineBarChart,
   MdOutlineClose,
-  MdOutlineCurrencyExchange,
-  MdOutlineGridView,
-  MdOutlineLogout,
-  MdOutlineMessage,
   MdOutlinePeople,
-  MdOutlineSettings,
-  MdOutlineShoppingBag,
   MdOutlineAdd,
   MdOutlineFolder,
   MdOutlineHelpOutline,
@@ -37,17 +29,15 @@ const Sidebar = () => {
     },
     { name: "Sales", subItems: ["Leads", "Opportunities", "Closed Deals"] },
     { name: "Design", subItems: ["Wireframes", "Mockups", "Prototypes"] },
-    { name: "Office", subItems: [] }, // Initialized with an empty array
-    { name: "Legal", subItems: [] }, // Initialized with an empty array
+    { name: "Office", subItems: [] },
+    { name: "Legal", subItems: [] },
   ]);
   const [showModal, setShowModal] = useState(false);
   const [newFolderName, setNewFolderName] = useState("");
   const [newSubItem, setNewSubItem] = useState("");
-  const [newSubItems, setNewSubItems] = useState([]);
   const [addSubItems, setAddSubItems] = useState(false);
   const [currentFolder, setCurrentFolder] = useState(null);
 
-  // closing the navbar when clicked outside the sidebar area
   const handleClickOutside = (event) => {
     if (
       navbarRef.current &&
@@ -77,14 +67,13 @@ const Sidebar = () => {
   const handleCreateFolder = () => {
     const newFolder = {
       name: newFolderName,
-      subItems: addSubItems ? [] : [],
+      subItems: addSubItems ? [] : null,
     };
     setFolders([...folders, newFolder]);
     setShowModal(false);
     setNewFolderName("");
-    setNewSubItems([]);
     setAddSubItems(false);
-    setActiveMenu(newFolderName); // Automatically open the new folder's submenu
+    setActiveMenu(newFolderName);
   };
 
   const handleAddSubItem = (folderName) => {
@@ -102,7 +91,7 @@ const Sidebar = () => {
     );
     setShowModal(false);
     setNewSubItem("");
-    setActiveMenu(currentFolder); // Automatically open the folder's submenu
+    setActiveMenu(currentFolder);
   };
 
   return (
@@ -233,10 +222,10 @@ const Sidebar = () => {
           </ul>
         </div>
         <div className="sidebar-section sidebar-footer">
-          <span className="sidebar-footer-text">7 days left on trial</span>
-          <Link to="/" className="sidebar-footer-link">
-            Upgrade now
-          </Link>
+          <div className="trial-info">
+            <span className="sidebar-footer-text">7 days left on trial</span>
+            <button className="sidebar-footer-button">Add Billing</button>
+          </div>
         </div>
       </div>
       {showModal && (
