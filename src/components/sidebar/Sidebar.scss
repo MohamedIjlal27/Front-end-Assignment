@@ -57,6 +57,18 @@
     column-gap: 20px;
   }
 
+  .sidebar-brand-text-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .sidebar-brand-inc {
+    font-size: 12px;
+    color: var(--logo-color);
+    margin-bottom: 2px;
+  }
+
   .sidebar-brand-text {
     text-transform: uppercase;
     font-weight: 900;
@@ -332,9 +344,13 @@
       opacity: 0.8;
     }
   }
+
   .trial-info {
     display: flex;
     align-items: center;
     gap: 10px;
+    color: var(
+      --side-text-color
+    ); /* Ensures the text color changes with theme */
   }
 }

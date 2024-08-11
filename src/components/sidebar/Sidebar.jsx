@@ -129,7 +129,10 @@ const Sidebar = () => {
       <div className="sidebar-top">
         <div className="sidebar-brand">
           <img src={theme === LIGHT_THEME ? LogoBlue : LogoWhite} alt="Logo" />
-          <span className="sidebar-brand-text">InnovateHub</span>
+          <div className="sidebar-brand-text-container">
+            <span className="sidebar-brand-inc">INC</span>
+            <span className="sidebar-brand-text">InnovateHub</span>
+          </div>
           <MdOutlinePerson size={24} className="profile-icon" />
         </div>
         <button className="sidebar-close-btn" onClick={closeSidebar}>
