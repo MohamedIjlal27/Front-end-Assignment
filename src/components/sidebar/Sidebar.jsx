@@ -12,6 +12,7 @@ import {
   MdOutlinePersonAdd,
   MdOutlineExpandMore,
   MdOutlineAddCircleOutline,
+  MdOutlinePerson,
 } from "react-icons/md";
 import { Link } from "react-router-dom";
 import "./Sidebar.scss";
@@ -32,11 +33,17 @@ const Sidebar = () => {
     { name: "Office", subItems: [] },
     { name: "Legal", subItems: [] },
   ]);
+  const [teams, setTeams] = useState([
+    { name: "Design team", members: 3 },
+    { name: "Marketing Team", members: 2 },
+    { name: "Development Team", members: 3 },
+  ]);
   const [showModal, setShowModal] = useState(false);
   const [newFolderName, setNewFolderName] = useState("");
   const [newSubItem, setNewSubItem] = useState("");
   const [addSubItems, setAddSubItems] = useState(false);
   const [currentFolder, setCurrentFolder] = useState(null);
+  const [isCreatingTeam, setIsCreatingTeam] = useState(false);
 
   const handleClickOutside = (event) => {
     if (
@@ -62,9 +69,12 @@ const Sidebar = () => {
   const handleAddFolder = () => {
     setShowModal(true);
     setCurrentFolder(null);
+    setIsCreatingTeam(false);
   };
 
   const handleCreateFolder = () => {
+    if (newFolderName.trim() === "") return;
+
     const newFolder = {
       name: newFolderName,
       subItems: addSubItems ? [] : null,
@@ -82,6 +92,8 @@ const Sidebar = () => {
   };
 
   const handleCreateSubItem = () => {
+    if (newSubItem.trim() === "") return;
+
     setFolders(
       folders.map((folder) =>
         folder.name === currentFolder
@@ -94,6 +106,21 @@ const Sidebar = () => {
     setActiveMenu(currentFolder);
   };
 
+  const handleAddTeam = () => {
+    setShowModal(true);
+    setCurrentFolder(null);
+    setIsCreatingTeam(true);
+  };
+
+  const handleCreateTeam = () => {
+    if (newFolderName.trim() === "") return;
+
+    const newTeam = { name: newFolderName, members: 0 }; // New teams start with 0 members
+    setTeams([...teams, newTeam]);
+    setShowModal(false);
+    setNewFolderName("");
+  };
+
   return (
     <nav
       className={`sidebar ${isSidebarOpen ? "sidebar-show" : ""}`}
@@ -101,8 +128,9 @@ const Sidebar = () => {
     >
       <div className="sidebar-top">
         <div className="sidebar-brand">
-          <img src={theme === LIGHT_THEME ? LogoBlue : LogoWhite} alt="" />
+          <img src={theme === LIGHT_THEME ? LogoBlue : LogoWhite} alt="Logo" />
           <span className="sidebar-brand-text">InnovateHub</span>
+          <MdOutlinePerson size={24} className="profile-icon" />
         </div>
         <button className="sidebar-close-btn" onClick={closeSidebar}>
           <MdOutlineClose size={24} />
@@ -111,40 +139,24 @@ const Sidebar = () => {
       <div className="sidebar-body">
         <div className="sidebar-section">
           <ul className="menu-list">
+            {teams.map((team, index) => (
+              <li className="menu-item" key={index}>
+                <Link to="/" className="menu-link">
+                  <span className="menu-link-icon">
+                    <MdOutlinePeople size={20} />
+                  </span>
+                  <span className="menu-link-text">{team.name}</span>
+                  <span className="menu-link-badge">{team.members}</span>
+                </Link>
+              </li>
+            ))}
             <li className="menu-item">
-              <Link to="/" className="menu-link">
-                <span className="menu-link-icon">
-                  <MdOutlinePeople size={20} />
-                </span>
-                <span className="menu-link-text">Design team</span>
-                <span className="menu-link-badge">3</span>
-              </Link>
-            </li>
-            <li className="menu-item">
-              <Link to="/" className="menu-link">
-                <span className="menu-link-icon">
-                  <MdOutlinePeople size={20} />
-                </span>
-                <span className="menu-link-text">Marketing Team</span>
-                <span className="menu-link-badge">2</span>
-              </Link>
-            </li>
-            <li className="menu-item">
-              <Link to="/" className="menu-link">
-                <span className="menu-link-icon">
-                  <MdOutlinePeople size={20} />
-                </span>
-                <span className="menu-link-text">Development Team</span>
-                <span className="menu-link-badge">3</span>
-              </Link>
-            </li>
-            <li className="menu-item">
-              <Link to="/" className="menu-link">
+              <div className="menu-link" onClick={handleAddTeam}>
                 <span className="menu-link-icon">
                   <MdOutlineAdd size={20} />
                 </span>
                 <span className="menu-link-text">Create a team</span>
-              </Link>
+              </div>
             </li>
           </ul>
         </div>
@@ -231,49 +243,65 @@ const Sidebar = () => {
       {showModal && (
         <div className="modal">
           <div className="modal-content">
-            <h3>{currentFolder ? "Add Sub-Item" : "Create Folder"}</h3>
+            <h3>
+              {isCreatingTeam
+                ? "Create Team"
+                : currentFolder
+                ? "Add Sub-Item"
+                : "Create Folder"}
+            </h3>
             <input
               type="text"
-              value={currentFolder ? newSubItem : newFolderName}
+              value={
+                isCreatingTeam
+                  ? newFolderName
+                  : currentFolder
+                  ? newSubItem
+                  : newFolderName
+              }
               onChange={(e) =>
-                currentFolder
+                isCreatingTeam
+                  ? setNewFolderName(e.target.value)
+                  : currentFolder
                   ? setNewSubItem(e.target.value)
                   : setNewFolderName(e.target.value)
               }
               placeholder={
-                currentFolder ? "Enter sub-item name" : "Enter folder name"
+                isCreatingTeam
+                  ? "Enter team name"
+                  : currentFolder
+                  ? "Enter sub-item name"
+                  : "Enter folder name"
               }
-              className="modal-input"
             />
-            {!currentFolder && (
-              <div className="add-sub-items">
+            {!isCreatingTeam && !currentFolder && (
+              <div>
                 <label>
                   <input
                     type="checkbox"
                     checked={addSubItems}
-                    onChange={(e) => setAddSubItems(e.target.checked)}
+                    onChange={() => setAddSubItems(!addSubItems)}
                   />
                   Add sub-items
                 </label>
               </div>
             )}
-            <div className="modal-actions">
-              <button
-                className="modal-button cancel"
-                onClick={() => setShowModal(false)}
-              >
-                Cancel
-              </button>
-              <button
-                className="modal-button create"
-                onClick={
-                  currentFolder ? handleCreateSubItem : handleCreateFolder
-                }
-                disabled={currentFolder ? !newSubItem : !newFolderName}
-              >
-                {currentFolder ? "Add Sub-Item" : "Create Folder"}
-              </button>
-            </div>
+            <button
+              onClick={
+                isCreatingTeam
+                  ? handleCreateTeam
+                  : currentFolder
+                  ? handleCreateSubItem
+                  : handleCreateFolder
+              }
+            >
+              {isCreatingTeam
+                ? "Create Team"
+                : currentFolder
+                ? "Add Sub-Item"
+                : "Create Folder"}
+            </button>
+            <button onClick={() => setShowModal(false)}>Cancel</button>
           </div>
         </div>
       )}

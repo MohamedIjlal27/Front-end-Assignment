@@ -26,20 +26,17 @@
     outline-offset: -1px;
   }
 
-  // toggling this class helps to hide/unhide the sidebar
   &.sidebar-show {
     @media (max-width: 768px) {
       transform: translateX(0);
     }
   }
 
-  // showing icons only on sidebar
   @media (max-width: 1200px) {
     width: auto;
     padding: 20px 6px;
   }
 
-  // hiding full on small screen
   @media (max-width: 768px) {
     width: 260px;
     transform: translateX(-100%);
@@ -73,6 +70,13 @@
     @media (max-width: 768px) {
       display: inline-block;
     }
+  }
+
+  .profile-icon {
+    cursor: pointer;
+    color: var(--logo-color); // Adjust color as needed
+    margin-left: 10px;
+    font-size: 24px; // Adjust size as needed
   }
 
   .sidebar-close-btn {
@@ -132,7 +136,7 @@
   }
 
   .menu-item {
-    margin-bottom: 8px;
+    margin-bottom: 1px;
 
     &:last-child {
       margin-bottom: 0;
@@ -259,17 +263,18 @@
     color: var(--footer-text-color);
   }
 
-  .sidebar-footer-btn {
-    background-color: var(--primary-color);
-    color: var(--light-color);
+  .sidebar-footer-button {
+    background-color: #5a32a3;
+    color: #fff;
     border: none;
-    border-radius: 8px;
-    padding: 8px 12px;
+    padding: 6px 12px;
+    border-radius: 4px;
     cursor: pointer;
-    transition: var(--default-transition);
+    font-size: 14px;
+    text-transform: uppercase;
 
     &:hover {
-      opacity: 0.8;
+      background-color: #472587;
     }
   }
 
@@ -297,13 +302,12 @@
     gap: 10px;
   }
 
-  .modal-content h4 {
+  .modal-content h3 {
     margin: 0;
   }
 
   .modal-content input[type="text"] {
     padding: 8px;
-    border: 1px solid var8px;
     border: 1px solid var(--border-color);
     border-radius: 4px;
   }
@@ -326,29 +330,5 @@
     &:hover {
       opacity: 0.8;
     }
-  }
-  .trial-info {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .sidebar-footer-text {
-    margin-right: 10px;
-  }
-
-  .sidebar-footer-button {
-    background-color: #5a32a3; /* Purple background */
-    color: #fff; /* White text */
-    border: none;
-    padding: 6px 12px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 14px;
-    text-transform: uppercase; /* Optional: to match button styles */
-  }
-
-  .sidebar-footer-button:hover {
-    background-color: #472587; /* Darker purple on hover */
   }
 }
