@@ -54,7 +54,7 @@
   .sidebar-brand {
     display: flex;
     align-items: center;
-    column-gap: 6px;
+    column-gap: 20px;
   }
 
   .sidebar-brand-text {
@@ -74,9 +74,10 @@
 
   .profile-icon {
     cursor: pointer;
-    color: var(--logo-color); // Adjust color as needed
-    margin-left: 10px;
-    font-size: 24px; // Adjust size as needed
+    color: var(--logo-color);
+    margin-left: 20px;
+    font-size: 24px;
+    margin-bottom: 5px;
   }
 
   .sidebar-close-btn {
@@ -330,5 +331,10 @@
     &:hover {
       opacity: 0.8;
     }
+  }
+  .trial-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
   }
 }
