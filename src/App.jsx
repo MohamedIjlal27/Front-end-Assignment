@@ -1,5 +1,10 @@
 import "./App.scss";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import BaseLayout from "./layout/BaseLayout";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import {
@@ -18,6 +23,7 @@ function App() {
       <Router>
         <Routes>
           <Route element={<BaseLayout />}>
+            <Route path="/" element={<Navigate to="/products" />} />
             <Route path="/products" element={<Products />} />
             <Route path="/sales" element={<Sales />} />
             <Route path="/design" element={<Design />} />
