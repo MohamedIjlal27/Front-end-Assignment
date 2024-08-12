@@ -1,7 +1,5 @@
 import React from "react";
 import {
-  MdOutlinePeople,
-  MdOutlineFolder,
   MdOutlineAdd,
   MdOutlineAddCircleOutline,
   MdOutlineExpandMore,
@@ -15,7 +13,6 @@ const SidebarBody = ({
   folders,
   teams,
   toggleSubMenu,
-  handleAddFolder,
   handleAddSubItem,
   handleAddTeam,
 }) => {
@@ -48,11 +45,7 @@ const SidebarBody = ({
       <div className="sidebar-section">
         <h4 className="sidebar-section-title">
           FOLDERS
-          <MdOutlineAddCircleOutline
-            size={20}
-            className="add-folder-icon"
-            onClick={handleAddFolder}
-          />
+          <MdOutlineAddCircleOutline size={20} className="add-folder-icon" />
         </h4>
         <ul className="menu-list">
           {folders.map((folder, index) => (

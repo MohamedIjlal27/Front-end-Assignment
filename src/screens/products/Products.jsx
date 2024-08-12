@@ -12,6 +12,7 @@ import tableData from "./tableData";
 
 const Products = () => {
   const [selectedBrands, setSelectedBrands] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const handleCheckboxChange = (brandName) => {
     setSelectedBrands((prevSelected) =>
@@ -21,7 +22,15 @@ const Products = () => {
     );
   };
 
-  const brandCount = tableData.length;
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const filteredData = tableData.filter((row) =>
+    row.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const brandCount = filteredData.length;
 
   return (
     <div className="products-page">
@@ -35,6 +44,8 @@ const Products = () => {
                 type="text"
                 className="search-bar"
                 placeholder="Search..."
+                value={searchQuery}
+                onChange={handleSearchChange}
               />
             </div>
             <FaEnvelope className="icon-message" />
@@ -88,7 +99,7 @@ const Products = () => {
               </tr>
             </thead>
             <tbody>
-              {tableData.map((row, index) => {
+              {filteredData.map((row, index) => {
                 const BrandIcon = row.brand;
                 return (
                   <tr key={index}>

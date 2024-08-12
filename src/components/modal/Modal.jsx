@@ -1,4 +1,5 @@
 import React from "react";
+import "../Sidebar.scss";
 
 const Modal = ({
   isCreatingTeam,
@@ -16,7 +17,7 @@ const Modal = ({
 }) => {
   const handleCloseModal = () => {
     setShowModal(false);
-    setAddSubItems(false); // Reset the checkbox state
+    setAddSubItems(false);
   };
 
   return (

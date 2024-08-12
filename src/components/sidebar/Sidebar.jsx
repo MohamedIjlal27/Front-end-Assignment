@@ -4,7 +4,6 @@ import {
   MdOutlineBusinessCenter,
   MdOutlineGavel,
   MdOutlineBusiness,
-  MdOutlinePeople,
   MdOutlineCampaign,
   MdOutlineCode,
 } from "react-icons/md";
@@ -79,58 +78,6 @@ const Sidebar = ({ setSelectedTitle }) => {
     navigate(`/${menu.toLowerCase()}`);
   };
 
-  const handleAddFolder = () => {
-    setShowModal(true);
-    setCurrentFolder(null);
-    setIsCreatingTeam(false);
-  };
-
-  const handleCreateFolder = () => {
-    const newFolder = {
-      name: newFolderName,
-      subItems: addSubItems ? [] : null,
-    };
-    setFolders([...folders, newFolder]);
-    setNewFolderName("");
-
-    if (addSubItems) {
-      setCurrentFolder(newFolderName);
-      setNewSubItem("");
-    } else {
-      setShowModal(false);
-      setAddSubItems(false);
-    }
-  };
-
-  const handleAddSubItem = (folderName) => {
-    setCurrentFolder(folderName);
-    setShowModal(true);
-  };
-
-  const handleCreateSubItem = () => {
-    setFolders(
-      folders.map((folder) =>
-        folder.name === currentFolder
-          ? { ...folder, subItems: [...folder.subItems, newSubItem] }
-          : folder
-      )
-    );
-    setShowModal(false);
-    setNewSubItem("");
-  };
-
-  const handleAddTeam = () => {
-    setShowModal(true);
-    setCurrentFolder(null);
-    setIsCreatingTeam(true);
-  };
-
-  const handleCreateTeam = () => {
-    setTeams([...teams, { name: newFolderName, members: 0 }]);
-    setShowModal(false);
-    setNewFolderName("");
-  };
-
   return (
     <nav
       className={`sidebar ${isSidebarOpen ? "sidebar-show" : ""}`}
@@ -146,11 +93,7 @@ const Sidebar = ({ setSelectedTitle }) => {
         folders={folders}
         teams={teams}
         toggleSubMenu={toggleSubMenu}
-        handleAddFolder={handleAddFolder}
-        handleAddSubItem={handleAddSubItem}
-        handleAddTeam={handleAddTeam}
-      />
-      {showModal && (
+      >
         <Modal
           isCreatingTeam={isCreatingTeam}
           currentFolder={currentFolder}
@@ -160,12 +103,9 @@ const Sidebar = ({ setSelectedTitle }) => {
           setNewFolderName={setNewFolderName}
           setNewSubItem={setNewSubItem}
           setAddSubItems={setAddSubItems}
-          handleCreateFolder={handleCreateFolder}
-          handleCreateSubItem={handleCreateSubItem}
-          handleCreateTeam={handleCreateTeam}
           setShowModal={setShowModal}
         />
-      )}
+      </SidebarBody>
     </nav>
   );
 };
