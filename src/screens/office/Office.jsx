@@ -1,7 +1,11 @@
 import React from "react";
 
 const Office = () => {
-  return <div></div>;
+  return (
+    <div>
+      <h1>Office</h1>
+    </div>
+  );
 };
 
 export default Office;

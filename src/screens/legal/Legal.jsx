@@ -1,7 +1,11 @@
 import React from "react";
 
 const Legal = () => {
-  return <div></div>;
+  return (
+    <div>
+      <h1>Legal</h1>
+    </div>
+  );
 };
 
 export default Legal;
