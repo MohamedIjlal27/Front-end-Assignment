@@ -27,7 +27,7 @@ const SidebarBody = ({
             <li className="menu-item" key={index}>
               <Link to="/" className="menu-link">
                 <span className="menu-link-icon">
-                  <MdOutlinePeople size={20} />
+                  <team.icon size={20} />
                 </span>
                 <span className="menu-link-text">{team.name}</span>
                 <span className="menu-link-badge">{team.members}</span>
@@ -62,7 +62,7 @@ const SidebarBody = ({
                 onClick={() => toggleSubMenu(folder.name)}
               >
                 <span className="menu-link-icon">
-                  <MdOutlineFolder size={20} />
+                  <folder.icon size={20} />
                 </span>
                 <span className="menu-link-text">{folder.name}</span>
                 {Array.isArray(folder.subItems) &&

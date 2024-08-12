@@ -1,5 +1,13 @@
 import { useContext, useEffect, useRef, useState } from "react";
-
+import {
+  MdOutlineDesignServices,
+  MdOutlineBusinessCenter,
+  MdOutlineGavel,
+  MdOutlineBusiness,
+  MdOutlinePeople,
+  MdOutlineCampaign,
+  MdOutlineCode,
+} from "react-icons/md";
 import LogoBlue from "../../assets/images/logo_blue.svg";
 import LogoWhite from "../../assets/images/logo_white.svg";
 import { SidebarContext } from "../../context/SidebarContext";
@@ -18,17 +26,26 @@ const Sidebar = ({ setSelectedTitle }) => {
   const [folders, setFolders] = useState([
     {
       name: "Products",
+      icon: MdOutlineBusiness,
       subItems: ["Roadmap", "Feedback", "Performance", "Team", "Analytics"],
     },
-    { name: "Sales", subItems: ["Leads", "Opportunities", "Closed Deals"] },
-    { name: "Design", subItems: ["Wireframes", "Mockups", "Prototypes"] },
-    { name: "Office", subItems: null },
-    { name: "Legal", subItems: null },
+    {
+      name: "Sales",
+      icon: MdOutlineBusinessCenter,
+      subItems: ["Leads", "Opportunities", "Closed Deals"],
+    },
+    {
+      name: "Design",
+      icon: MdOutlineDesignServices,
+      subItems: ["Wireframes", "Mockups", "Prototypes"],
+    },
+    { name: "Office", icon: MdOutlineBusiness, subItems: null },
+    { name: "Legal", icon: MdOutlineGavel, subItems: null },
   ]);
   const [teams, setTeams] = useState([
-    { name: "Design team", members: 3 },
-    { name: "Marketing Team", members: 2 },
-    { name: "Development Team", members: 3 },
+    { name: "Design team", icon: MdOutlineDesignServices, members: 3 },
+    { name: "Marketing Team", icon: MdOutlineCampaign, members: 2 },
+    { name: "Development Team", icon: MdOutlineCode, members: 3 },
   ]);
   const [showModal, setShowModal] = useState(false);
   const [newFolderName, setNewFolderName] = useState("");
@@ -58,7 +75,7 @@ const Sidebar = ({ setSelectedTitle }) => {
 
   const toggleSubMenu = (menu) => {
     setActiveMenu(activeMenu === menu ? null : menu);
-    setSelectedTitle(menu); // Update the selected title
+    setSelectedTitle(menu);
     navigate(`/${menu.toLowerCase()}`);
   };
 
@@ -81,7 +98,7 @@ const Sidebar = ({ setSelectedTitle }) => {
       setNewSubItem("");
     } else {
       setShowModal(false);
-      setAddSubItems(false); // Reset the checkbox state
+      setAddSubItems(false);
     }
   };
 
