@@ -12,7 +12,7 @@ import Modal from "../modal/Modal";
 import { useNavigate } from "react-router-dom";
 import "../Sidebar.scss";
 
-const Sidebar = () => {
+const Sidebar = ({ setSelectedTitle }) => {
   const { theme } = useContext(ThemeContext);
   const { isSidebarOpen, closeSidebar } = useContext(SidebarContext);
   const navbarRef = useRef(null);
@@ -61,6 +61,7 @@ const Sidebar = () => {
 
   const toggleSubMenu = (menu) => {
     setActiveMenu(activeMenu === menu ? null : menu);
+    setSelectedTitle(menu); // Update the selected title
     navigate(`/${menu.toLowerCase()}`);
   };
 
