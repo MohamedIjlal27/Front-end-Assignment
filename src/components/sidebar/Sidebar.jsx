@@ -1,9 +1,7 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import { ThemeContext } from "../../context/ThemeContext";
-import { LIGHT_THEME } from "../../constants/themeConstants";
+
 import LogoBlue from "../../assets/images/logo_blue.svg";
 import LogoWhite from "../../assets/images/logo_white.svg";
-import { MdOutlineClose } from "react-icons/md";
 import { SidebarContext } from "../../context/SidebarContext";
 
 import SidebarTop from "../sidebartop/SidebarTop";
@@ -13,7 +11,6 @@ import { useNavigate } from "react-router-dom";
 import "../Sidebar.scss";
 
 const Sidebar = ({ setSelectedTitle }) => {
-  const { theme } = useContext(ThemeContext);
   const { isSidebarOpen, closeSidebar } = useContext(SidebarContext);
   const navbarRef = useRef(null);
 
@@ -123,7 +120,6 @@ const Sidebar = ({ setSelectedTitle }) => {
       ref={navbarRef}
     >
       <SidebarTop
-        theme={theme}
         LogoBlue={LogoBlue}
         LogoWhite={LogoWhite}
         closeSidebar={closeSidebar}

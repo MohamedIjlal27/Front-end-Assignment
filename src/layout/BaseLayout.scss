@@ -1,17 +1,17 @@
 .base-layout {
   display: flex;
   flex-direction: column;
+  height: 100vh;
 }
 
 .page-wrapper {
   display: flex;
-  margin-top: 60px; /* Adjust based on your header height */
+  flex: 1;
+  padding-top: 60px; // Adjust this value to match the height of the header
+  margin-left: 287px; // Adjust this value to match the width of the sidebar
 }
 
 .content-wrapper {
-  margin-left: 287px; /* Adjust based on your sidebar width */
-  padding: 20px;
-  width: calc(100% - 287px);
-  height: calc(100vh - 60px);
+  flex: 1;
   overflow-y: auto;
 }

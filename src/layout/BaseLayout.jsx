@@ -11,9 +11,7 @@ const BaseLayout = () => {
     <div className="base-layout">
       <Header selectedTitle={selectedTitle} />
       <main className="page-wrapper">
-        {/* left of page */}
         <Sidebar setSelectedTitle={setSelectedTitle} />
-        {/* right side/content of the page */}
         <div className="content-wrapper">
           <Outlet />
         </div>
