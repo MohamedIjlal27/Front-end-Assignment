@@ -6,7 +6,15 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import MoonIcon from "./assets/icons/moon.svg";
 import SunIcon from "./assets/icons/sun.svg";
 import BaseLayout from "./layout/BaseLayout";
-import { Products, PageNotFound } from "./screens";
+import {
+  Products,
+  PageNotFound,
+  Sales,
+  Design,
+  Office,
+  Legal,
+} from "./screens";
+import DynamicPage from "./screens/dynamicpage/DynamicPage";
 
 function App() {
   const { theme, toggleTheme } = useContext(ThemeContext);
@@ -25,7 +33,12 @@ function App() {
       <Router>
         <Routes>
           <Route element={<BaseLayout />}>
-            <Route path="/" element={<Products />} />
+            <Route path="/products" element={<Products />} />
+            <Route path="/sales" element={<Sales />} />
+            <Route path="/design" element={<Design />} />
+            <Route path="/office" element={<Office />} />
+            <Route path="/legal" element={<Legal />} />
+            <Route path="/:folderName" element={<DynamicPage />} />
             <Route path="*" element={<PageNotFound />} />
           </Route>
         </Routes>
@@ -44,5 +57,4 @@ function App() {
     </>
   );
 }
-
 export default App;

@@ -3,25 +3,20 @@ import { ThemeContext } from "../../context/ThemeContext";
 import { LIGHT_THEME } from "../../constants/themeConstants";
 import LogoBlue from "../../assets/images/logo_blue.svg";
 import LogoWhite from "../../assets/images/logo_white.svg";
-import {
-  MdOutlineClose,
-  MdOutlinePeople,
-  MdOutlineAdd,
-  MdOutlineFolder,
-  MdOutlineHelpOutline,
-  MdOutlinePersonAdd,
-  MdOutlineExpandMore,
-  MdOutlineAddCircleOutline,
-  MdOutlinePerson,
-} from "react-icons/md";
-import { Link } from "react-router-dom";
-import "./Sidebar.scss";
+import { MdOutlineClose } from "react-icons/md";
 import { SidebarContext } from "../../context/SidebarContext";
+
+import SidebarTop from "../sidebartop/SidebarTop";
+import SidebarBody from "../sidebarbody/SidebarBody";
+import Modal from "../modal/Modal";
+import { useNavigate } from "react-router-dom";
+import "../Sidebar.scss";
 
 const Sidebar = () => {
   const { theme } = useContext(ThemeContext);
   const { isSidebarOpen, closeSidebar } = useContext(SidebarContext);
   const navbarRef = useRef(null);
+
   const [activeMenu, setActiveMenu] = useState(null);
   const [folders, setFolders] = useState([
     {
@@ -30,8 +25,8 @@ const Sidebar = () => {
     },
     { name: "Sales", subItems: ["Leads", "Opportunities", "Closed Deals"] },
     { name: "Design", subItems: ["Wireframes", "Mockups", "Prototypes"] },
-    { name: "Office", subItems: [] },
-    { name: "Legal", subItems: [] },
+    { name: "Office", subItems: null },
+    { name: "Legal", subItems: null },
   ]);
   const [teams, setTeams] = useState([
     { name: "Design team", members: 3 },
@@ -44,6 +39,8 @@ const Sidebar = () => {
   const [addSubItems, setAddSubItems] = useState(false);
   const [currentFolder, setCurrentFolder] = useState(null);
   const [isCreatingTeam, setIsCreatingTeam] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleClickOutside = (event) => {
     if (
@@ -64,6 +61,7 @@ const Sidebar = () => {
 
   const toggleSubMenu = (menu) => {
     setActiveMenu(activeMenu === menu ? null : menu);
+    navigate(`/${menu.toLowerCase()}`);
   };
 
   const handleAddFolder = () => {
@@ -73,17 +71,20 @@ const Sidebar = () => {
   };
 
   const handleCreateFolder = () => {
-    if (newFolderName.trim() === "") return;
-
     const newFolder = {
       name: newFolderName,
       subItems: addSubItems ? [] : null,
     };
     setFolders([...folders, newFolder]);
-    setShowModal(false);
     setNewFolderName("");
-    setAddSubItems(false);
-    setActiveMenu(newFolderName);
+
+    if (addSubItems) {
+      setCurrentFolder(newFolderName);
+      setNewSubItem("");
+    } else {
+      setShowModal(false);
+      setAddSubItems(false); // Reset the checkbox state
+    }
   };
 
   const handleAddSubItem = (folderName) => {
@@ -92,8 +93,6 @@ const Sidebar = () => {
   };
 
   const handleCreateSubItem = () => {
-    if (newSubItem.trim() === "") return;
-
     setFolders(
       folders.map((folder) =>
         folder.name === currentFolder
@@ -103,7 +102,6 @@ const Sidebar = () => {
     );
     setShowModal(false);
     setNewSubItem("");
-    setActiveMenu(currentFolder);
   };
 
   const handleAddTeam = () => {
@@ -113,10 +111,7 @@ const Sidebar = () => {
   };
 
   const handleCreateTeam = () => {
-    if (newFolderName.trim() === "") return;
-
-    const newTeam = { name: newFolderName, members: 0 }; // New teams start with 0 members
-    setTeams([...teams, newTeam]);
+    setTeams([...teams, { name: newFolderName, members: 0 }]);
     setShowModal(false);
     setNewFolderName("");
   };
@@ -126,187 +121,36 @@ const Sidebar = () => {
       className={`sidebar ${isSidebarOpen ? "sidebar-show" : ""}`}
       ref={navbarRef}
     >
-      <div className="sidebar-top">
-        <div className="sidebar-brand">
-          <img src={theme === LIGHT_THEME ? LogoBlue : LogoWhite} alt="Logo" />
-          <div className="sidebar-brand-text-container">
-            <span className="sidebar-brand-inc">INC</span>
-            <span className="sidebar-brand-text">InnovateHub</span>
-          </div>
-          <MdOutlinePerson size={24} className="profile-icon" />
-        </div>
-        <button className="sidebar-close-btn" onClick={closeSidebar}>
-          <MdOutlineClose size={24} />
-        </button>
-      </div>
-      <div className="sidebar-body">
-        <div className="sidebar-section">
-          <ul className="menu-list">
-            {teams.map((team, index) => (
-              <li className="menu-item" key={index}>
-                <Link to="/" className="menu-link">
-                  <span className="menu-link-icon">
-                    <MdOutlinePeople size={20} />
-                  </span>
-                  <span className="menu-link-text">{team.name}</span>
-                  <span className="menu-link-badge">{team.members}</span>
-                </Link>
-              </li>
-            ))}
-            <li className="menu-item">
-              <div className="menu-link" onClick={handleAddTeam}>
-                <span className="menu-link-icon">
-                  <MdOutlineAdd size={20} />
-                </span>
-                <span className="menu-link-text">Create a team</span>
-              </div>
-            </li>
-          </ul>
-        </div>
-        <div className="sidebar-section">
-          <h4 className="sidebar-section-title">
-            FOLDERS
-            <MdOutlineAddCircleOutline
-              size={20}
-              className="add-folder-icon"
-              onClick={handleAddFolder}
-            />
-          </h4>
-          <ul className="menu-list">
-            {folders.map((folder, index) => (
-              <li className="menu-item" key={index}>
-                <div
-                  className="menu-link"
-                  onClick={() => toggleSubMenu(folder.name)}
-                >
-                  <span className="menu-link-icon">
-                    <MdOutlineFolder size={20} />
-                  </span>
-                  <span className="menu-link-text">{folder.name}</span>
-                  {folder.subItems && folder.subItems.length > 0 && (
-                    <span
-                      className={`menu-link-icon ${
-                        activeMenu === folder.name ? "rotate" : ""
-                      }`}
-                    >
-                      <MdOutlineExpandMore size={20} />
-                    </span>
-                  )}
-                </div>
-                {activeMenu === folder.name && folder.subItems && (
-                  <ul className="submenu-list">
-                    {folder.subItems.map((subItem, subIndex) => (
-                      <li className="submenu-item" key={subIndex}>
-                        {subItem}
-                      </li>
-                    ))}
-                    <li
-                      className="submenu-item add-sub-item"
-                      onClick={() => handleAddSubItem(folder.name)}
-                    >
-                      <span className="submenu-item-icon">
-                        <MdOutlineAdd size={20} />
-                      </span>
-                      Add new sub
-                    </li>
-                  </ul>
-                )}
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div className="sidebar-section">
-          <ul className="menu-list">
-            <li className="menu-item">
-              <Link to="/" className="menu-link">
-                <span className="menu-link-icon">
-                  <MdOutlinePersonAdd size={20} />
-                </span>
-                <span className="menu-link-text">Invite teammates</span>
-              </Link>
-            </li>
-            <li className="menu-item">
-              <Link to="/" className="menu-link">
-                <span className="menu-link-icon">
-                  <MdOutlineHelpOutline size={20} />
-                </span>
-                <span className="menu-link-text">Help and first steps</span>
-                <span className="menu-link-badge">0/6</span>
-              </Link>
-            </li>
-          </ul>
-        </div>
-        <div className="sidebar-section sidebar-footer">
-          <div className="trial-info">
-            <span className="sidebar-footer-text">7 days left on trial</span>
-            <button className="sidebar-footer-button">Add Billing</button>
-          </div>
-        </div>
-      </div>
+      <SidebarTop
+        theme={theme}
+        LogoBlue={LogoBlue}
+        LogoWhite={LogoWhite}
+        closeSidebar={closeSidebar}
+      />
+      <SidebarBody
+        activeMenu={activeMenu}
+        folders={folders}
+        teams={teams}
+        toggleSubMenu={toggleSubMenu}
+        handleAddFolder={handleAddFolder}
+        handleAddSubItem={handleAddSubItem}
+        handleAddTeam={handleAddTeam}
+      />
       {showModal && (
-        <div className="modal">
-          <div className="modal-content">
-            <h3>
-              {isCreatingTeam
-                ? "Create Team"
-                : currentFolder
-                ? "Add Sub-Item"
-                : "Create Folder"}
-            </h3>
-            <input
-              type="text"
-              value={
-                isCreatingTeam
-                  ? newFolderName
-                  : currentFolder
-                  ? newSubItem
-                  : newFolderName
-              }
-              onChange={(e) =>
-                isCreatingTeam
-                  ? setNewFolderName(e.target.value)
-                  : currentFolder
-                  ? setNewSubItem(e.target.value)
-                  : setNewFolderName(e.target.value)
-              }
-              placeholder={
-                isCreatingTeam
-                  ? "Enter team name"
-                  : currentFolder
-                  ? "Enter sub-item name"
-                  : "Enter folder name"
-              }
-            />
-            {!isCreatingTeam && !currentFolder && (
-              <div>
-                <label>
-                  <input
-                    type="checkbox"
-                    checked={addSubItems}
-                    onChange={() => setAddSubItems(!addSubItems)}
-                  />
-                  Add sub-items
-                </label>
-              </div>
-            )}
-            <button
-              onClick={
-                isCreatingTeam
-                  ? handleCreateTeam
-                  : currentFolder
-                  ? handleCreateSubItem
-                  : handleCreateFolder
-              }
-            >
-              {isCreatingTeam
-                ? "Create Team"
-                : currentFolder
-                ? "Add Sub-Item"
-                : "Create Folder"}
-            </button>
-            <button onClick={() => setShowModal(false)}>Cancel</button>
-          </div>
-        </div>
+        <Modal
+          isCreatingTeam={isCreatingTeam}
+          currentFolder={currentFolder}
+          newFolderName={newFolderName}
+          newSubItem={newSubItem}
+          addSubItems={addSubItems}
+          setNewFolderName={setNewFolderName}
+          setNewSubItem={setNewSubItem}
+          setAddSubItems={setAddSubItems}
+          handleCreateFolder={handleCreateFolder}
+          handleCreateSubItem={handleCreateSubItem}
+          handleCreateTeam={handleCreateTeam}
+          setShowModal={setShowModal}
+        />
       )}
     </nav>
   );

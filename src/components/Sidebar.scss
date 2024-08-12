@@ -291,7 +291,7 @@
     }
   }
 
-  .modal {
+  .modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -312,23 +312,33 @@
     width: 300px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 20px; /* Increase gap for better spacing */
   }
 
-  .modal-content h3 {
+  .modal-content h2 {
     margin: 0;
-  }
-
-  .modal-content input[type="text"] {
-    padding: 8px;
-    border: 1px solid var(--border-color);
-    border-radius: 4px;
   }
 
   .modal-content label {
     display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .modal-content .checkbox-container {
+    display: flex;
     align-items: center;
     gap: 8px;
+  }
+
+  .modal-content input[type="text"] {
+    padding: 10px;
+    border: 2px solid var(--border-color);
+    border-radius: 4px;
+    background-color: #fff;
+    width: 100%;
+    box-sizing: border-box;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
   }
 
   .modal-content button {
