@@ -312,7 +312,7 @@
     width: 300px;
     display: flex;
     flex-direction: column;
-    gap: 20px; /* Increase gap for better spacing */
+    gap: 20px;
   }
 
   .modal-content h2 {
@@ -359,8 +359,11 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    color: var(
-      --side-text-color
-    ); /* Ensures the text color changes with theme */
+    color: var(--side-text-color);
+  }
+
+  .teams-section {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    border-radius: 10px;
   }
 }

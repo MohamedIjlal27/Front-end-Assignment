@@ -21,7 +21,7 @@ const SidebarBody = ({
 }) => {
   return (
     <div className="sidebar-body">
-      <div className="sidebar-section">
+      <div className="teams-section">
         <ul className="menu-list">
           {teams.map((team, index) => (
             <li className="menu-item" key={index}>
@@ -34,6 +34,7 @@ const SidebarBody = ({
               </Link>
             </li>
           ))}
+          <li className="menu-item-separator"></li>
           <li className="menu-item">
             <div className="menu-link" onClick={handleAddTeam}>
               <span className="menu-link-icon">

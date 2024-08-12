@@ -1,0 +1,17 @@
+.base-layout {
+  display: flex;
+  flex-direction: column;
+}
+
+.page-wrapper {
+  display: flex;
+  margin-top: 60px; /* Adjust based on your header height */
+}
+
+.content-wrapper {
+  margin-left: 287px; /* Adjust based on your sidebar width */
+  padding: 20px;
+  width: calc(100% - 287px);
+  height: calc(100vh - 60px);
+  overflow-y: auto;
+}
