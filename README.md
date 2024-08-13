@@ -5,3 +5,4 @@
 4. Once the dependencies are installed, you can start the development server with: "npm run dev".
 5. Vite will start the development server and provide a local URL (typically http://localhost:3000) where you can view the React application.
 6. Open your browser and go to the URL provided by the Vite development server (usually http://localhost:3000). You should see your React application running.
+7. Live Server: (https://front-end-assignment-gray.vercel.app/)
